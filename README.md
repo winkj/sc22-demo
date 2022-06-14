@@ -111,3 +111,12 @@ Choose whether you want to use the display (1) or not (0)
 ### FONT_SIZE, TITLE_OFFSET, LINE_OFFSET
 These settings are used to influence the display layout.
 
+
+## Troubleshooting
+
+### Led codes
+1. LED white: during initialization / sensor probing
+2. LED blue: Adafruit IO init
+3. LED green: initialization done
+4. LED blinking red: panic; reset boarda
+5. LED static red: IO connection lost

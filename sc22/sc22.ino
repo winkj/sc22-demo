@@ -1,26 +1,15 @@
-// Setup:
-// - ESP32-S2 board setup:- https://learn.adafruit.com/adafruit-esp32-s2-tft-feather/arduino-ide-setup
-// - TFT setup: https://learn.adafruit.com/adafruit-esp32-s2-tft-feather/built-in-tft
-// - Adafruit IO setup: https://learn.adafruit.com/adafruit-esp32-s2-tft-feather/usage-with-adafruit-io
-//
-// Sensor setup: install the following libraries with dependencies:
-// - arduino-sht
-// - Sensirion I2C SCD4x
+// Documentation:
+//    https://github.com/winkj/sc22-demo
 //
 // this is a simple demonstration to show a prototyping setup; this
 // is not meant to be used in a production setup without additional
 // error checking/handling
 //
-// LED Codes
-// 1. LED off: during initialization
-// 2. LED on permanently: init done
-// 3. LED blinking: panic; reset board
+// Setup notes:
+// - ESP32-S2 board setup:- https://learn.adafruit.com/adafruit-esp32-s2-tft-feather/arduino-ide-setup
+// - TFT setup: https://learn.adafruit.com/adafruit-esp32-s2-tft-feather/built-in-tft
+// - Adafruit IO setup: https://learn.adafruit.com/adafruit-esp32-s2-tft-feather/usage-with-adafruit-io
 //
-// TODO:
-// - create a dynamic baseline calculation, to avoid staying in red during the show
-// - camel case vs underscores
-// - do we need IO reconnect?
-// 
 // Questions: email Johannes Winkelmann, jwi@sensirion.com
 
 
@@ -49,7 +38,6 @@
 #define IO_T_CHANNEL     "sc22_t_1" // Channel name for temperature
 
 // display configuration
-#define USE_DISPLAY 1             // enable display on ESP32-S2 TFT
 
 #define FONT_SIZE     3
 #define TITLE_OFFSET 10
@@ -58,7 +46,20 @@
 // -- end demo configuration don't edit past this point unless you want to modify the demo
 
 
+#include <Wire.h>
 #include <Adafruit_NeoPixel.h>
+#include <SHTSensor.h>
+#include <SensirionI2CScd4x.h>
+
+TwoWire& theWire = Wire;
+
+#if defined(ARDUINO_ADAFRUIT_QTPY_ESP32S2)
+  #define USE_DISPLAY   0
+#else
+  #define USE_DISPLAY   1
+#endif
+
+
 #define NUMPIXELS        1
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
 
@@ -68,10 +69,6 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
   #include <SPI.h>
 #endif
 
-
-#include <SHTSensor.h>
-#include <SensirionI2CScd4x.h>
-#include <Wire.h>
 
 #if USE_NETWORK
   #include <WiFi.h>
@@ -85,12 +82,12 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
   AdafruitIO_Feed* io_temperature = io.feed(IO_T_CHANNEL);
 #endif
 
-bool io_connected = false;
-
 #if USE_DISPLAY
   // Use dedicated hardware SPI pins
   Adafruit_ST7789 tft = Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RST);
 #endif
+
+
 
 // Sensors
 SHTSensor sht;
@@ -120,21 +117,22 @@ void setup() {
   pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
   pixels.setBrightness(20); // not so bright
 
-  pixels.fill(0xFF0000);
+  pixels.fill(0xFFFFFF);
   pixels.show();
 
   initTFT();
   delay(500);
+  displayTitle();
 
   if (!initSensors()) {
     panic();
     exit(1);
   }
 
-  displayTitle();
+  pixels.fill(0x0000FF);
+  pixels.show();
   initAdafruitIO();
-  displayTitle();
-
+  
   pixels.fill(0x00FF00);
   pixels.show();
 }
@@ -154,8 +152,6 @@ void initAdafruitIO()
   // we are connected
   Serial.println();
   Serial.println(io.statusText());
-
-  io_connected = true;
 #endif
 }
 
@@ -184,15 +180,18 @@ void initTFT()
 
 bool initSensors()
 {
-  Wire.begin();
-  if (sht.init()) {
-    Serial.print("init(): success\n");
-  } else {
-    Serial.print("init(): failed\n");
+  #if defined(ARDUINO_ADAFRUIT_QTPY_ESP32S2)
+    theWire = Wire1;
+    theWire.setPins(SDA1, SCL1);
+  #endif
+  theWire.begin();
+
+  if (!sht.init(theWire)) {
+    Serial.print("SHT init(): failed\n");
     return false;
   }
 
-  scd4x.begin(Wire);
+  scd4x.begin(theWire);
   // stop potentially previously started measurement
   scdError = scd4x.stopPeriodicMeasurement();
   if (scdError) {
@@ -254,7 +253,7 @@ void loop() {
   Serial.println((int)(sht.getHumidity() * 10));
   
 
-  delay(1000);
+  delay(1000); // don't change this, as the rate limiting depends on it
 }
 
 // -- Adafruit IO
@@ -276,7 +275,12 @@ bool uploadToIO(float co2, float t, float rh)
     Serial.print("IO network status\n");
     Serial.println(io.networkStatus());
 
-    io_connected = false;
+    pixels.fill(0x0000FF);
+    pixels.show();
+
+  } else {
+    pixels.fill(0x00FF00);
+    pixels.show();
   }
 #endif
 
@@ -289,7 +293,7 @@ void displayTitle()
 #if USE_DISPLAY
   tft.fillScreen(ST77XX_BLACK);
   tft.setCursor(0, 0);
-  tft.setTextColor(io_connected ? ST77XX_CYAN : ST77XX_YELLOW);
+  tft.setTextColor(ST77XX_CYAN);
   tft.setTextWrap(true);
   tft.setTextSize(FONT_SIZE);
   tft.print("Converge Demo");
