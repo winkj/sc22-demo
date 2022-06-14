@@ -47,6 +47,10 @@ You can setup your dashboard in any way you like. We would recommend the followi
 - Create two "line chart" blocks; connect the first to CO2, and the second to RH and T
 - Recommended: for the initial setup, it is recommended to add a "stream" type block too, which will help you see incoming events
 
+If you followed the instructions above, your dashboard should looks similar to this:
+
+![Dashboard](assets/dashboard.jpg)
+
 ## Demo Configuration
 TBD
 
