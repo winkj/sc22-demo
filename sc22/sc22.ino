@@ -25,23 +25,23 @@
 
 
 // --------------- demo configuration
-#define USE_NETWORK 1             // enable network upload
-#define USE_F       1             // output temperature in Fahrenheit (alternative: Celcius)
+#define USE_NETWORK               1   // enable network upload
+#define USE_F                     1   // output temperature in Fahrenheit (alternative: Celcius)
 
-#define CO2_THRESHOLD_RED    1200 // CO2 threshold for "orange" warning
-#define CO2_THRESHOLD_ORANGE 1000 // CO2 threshold for "red" alarm
+#define CO2_THRESHOLD_RED      1200   // CO2 threshold for "orange" warning
+#define CO2_THRESHOLD_ORANGE   1000   // CO2 threshold for "red" alarm
 
 // Adafruit IO configuration
-#define IO_UPLOAD_INTERVAL_S 10   // interval for cloud upload in seconds
-#define IO_CO2_CHANNEL "sc22_co2_1" // Channel name for CO2
-#define IO_RH_CHANNEL   "sc22_rh_1" // Channel name for relative humidity
-#define IO_T_CHANNEL     "sc22_t_1" // Channel name for temperature
+#define IO_UPLOAD_INTERVAL_S     10   // interval for cloud upload in seconds
+
+#define IO_CO2_CHANNEL "sc22_co2_1"   // Channel name for CO2
+#define IO_RH_CHANNEL   "sc22_rh_1"   // Channel name for relative humidity
+#define IO_T_CHANNEL     "sc22_t_1"   // Channel name for temperature
 
 // display configuration
-#define FONT_SIZE     3
-#define TITLE_OFFSET 10
-#define LINE_OFFSET  30
-
+#define FONT_SIZE                 3
+#define TITLE_OFFSET             10
+#define LINE_OFFSET              30
 // --------------- end demo configuration -- don't edit past this point unless you want to modify the demo
 
 
