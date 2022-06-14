@@ -114,6 +114,8 @@ These settings are used to influence the display layout.
 
 ## Troubleshooting
 
+This demo logs a fair amount of information to the serial console; use this as a starting point for debugging
+
 ### Led codes
 1. LED white: during initialization / sensor probing
 2. LED blue: Adafruit IO init
