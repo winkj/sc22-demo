@@ -24,7 +24,7 @@
 // ------
 
 
-// -- demo configuration
+// --------------- demo configuration
 #define USE_NETWORK 1             // enable network upload
 #define USE_F       1             // output temperature in Fahrenheit (alternative: Celcius)
 
@@ -38,12 +38,11 @@
 #define IO_T_CHANNEL     "sc22_t_1" // Channel name for temperature
 
 // display configuration
-
 #define FONT_SIZE     3
 #define TITLE_OFFSET 10
 #define LINE_OFFSET  30
 
-// -- end demo configuration don't edit past this point unless you want to modify the demo
+// --------------- end demo configuration -- don't edit past this point unless you want to modify the demo
 
 
 #include <Wire.h>
