@@ -52,5 +52,49 @@ If you followed the instructions above, your dashboard should looks similar to t
 ![Dashboard](assets/dashboard.jpg)
 
 ## Demo Configuration
-TBD
+
+`sc22.ino` has a number of configuration options at the beginning of the file:
+
+```c++
+#define USE_NETWORK 1             // enable network upload
+#define USE_F       1             // output temperature in Fahrenheit (alternative: Celcius)
+
+#define CO2_THRESHOLD_RED    1200 // CO2 threshold for "orange" warning
+#define CO2_THRESHOLD_ORANGE 1000 // CO2 threshold for "red" alarm
+
+#define IO_UPLOAD_INTERVAL_S 10   // interval for cloud upload in seconds
+#define IO_CO2_CHANNEL "sc22_co2_1" // Channel name for CO2
+#define IO_RH_CHANNEL   "sc22_rh_1" // Channel name for relative humidity
+#define IO_T_CHANNEL     "sc22_t_1" // Channel name for temperature
+
+// display configuration
+#define USE_DISPLAY 1             // enable display on ESP32-S2 TFT
+
+#define FONT_SIZE     3
+#define TITLE_OFFSET 10
+#define LINE_OFFSET  30
+```
+
+### USE_NETWORK
+This switch turns the network upload on (1) and off (0)
+
+### USE_F
+Choose whether temperatures should be displayed and uploaded in Fahrenheit (1) or Celcius (0)
+
+### CO2_THRESHOLD_RED, CO2_THRESHOLD_ORANGE
+CO2 thresholds in PPM (Parts Per Million) for local display; this will be used to change the color of the displayed value from green to orange to red and back
+
+### IO_UPLOAD_INTERVAL_S
+This defines the time between uploads to Adafruit IO, in seconds. Note that IO limits the upload rates, so choosing a low value here might mean that you're hitting those limits.
+
+The CO2 sensor itself is only updated every 5 seconds, while the Humidity/Temperature sensor is updated every second.
+
+### IO_CO2_CHANNEL, IO_RH_CHANNEL, IO_T_CHANNEL
+These are the feed keys we configured in Adafruit IO. If you used the name in the table above, no changes should be necessary here
+
+### USE_DISPLAY
+Choose whether you want to use the display (1) or not (0)
+
+### FONT_SIZE, TITLE_OFFSET, LINE_OFFSET
+These settings are used to influence the display layout.
 
