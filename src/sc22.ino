@@ -25,7 +25,7 @@
 
 
 #include "config.h"
-// ^^ create a local file called wifi_config.h, and put the following info
+// ^^ create a local file called config.h, and put the following info
 // ------
 // #define WIFI_SSID   "your wifi ssid"            // your network SSID (name)
 // #define WIFI_PASS   "your wifi pass"            // your network password (use for WPA, or use as key for WEP)
