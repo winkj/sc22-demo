@@ -58,6 +58,9 @@
 // -- end demo configuration don't edit past this point unless you want to modify the demo
 
 
+#include <Adafruit_NeoPixel.h>
+#define NUMPIXELS        1
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN_NEOPIXEL, NEO_GRB + NEO_KHZ800);
 
 #if USE_DISPLAY
   #include <Adafruit_GFX.h>    // Core graphics library
@@ -107,9 +110,18 @@ float    scd_t, scd_rh;
 #endif
 
 void setup() {
-  pinMode(LED_BUILTIN, OUTPUT);
-
   Serial.begin(9600);
+
+#if defined(NEOPIXEL_POWER)
+  pinMode(NEOPIXEL_POWER, OUTPUT);
+  digitalWrite(NEOPIXEL_POWER, HIGH);
+#endif
+
+  pixels.begin(); // INITIALIZE NeoPixel strip object (REQUIRED)
+  pixels.setBrightness(20); // not so bright
+
+  pixels.fill(0xFF0000);
+  pixels.show();
 
   initTFT();
   delay(500);
@@ -123,7 +135,8 @@ void setup() {
   initAdafruitIO();
   displayTitle();
 
-  digitalWrite(LED_BUILTIN, HIGH);
+  pixels.fill(0x00FF00);
+  pixels.show();
 }
 
 void initAdafruitIO()
@@ -321,10 +334,12 @@ void panic()
   Serial.println("PANIC: looping indefinitely");
 
   while (true) {
-    digitalWrite(LED_BUILTIN, HIGH);
+    pixels.fill(0xFF0000);
+    pixels.show();
     delay(500);
-    digitalWrite(LED_BUILTIN, LOW);
+
+    pixels.fill(0x000000);
+    pixels.show();
     delay(500);
   }
 }
-
