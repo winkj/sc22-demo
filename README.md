@@ -11,6 +11,19 @@ This demo application reads out the Sensirion SCD40 and SHT40 sensors, optionall
 - SCD40 breakout board
 - SHT40 breakout board
 
+### Arduino IDE libraries
+
+Install the following libraries and all its dependencies in Arduino IDE:
+
+#### Required
+- Adafruit NeoPixel
+- Sensirion I2C SCD4x
+- arduino-sht
+
+#### Optional
+- Network upload (Adafruit IO): Adafruit IO Arduino
+- TFT: Adafruit ST7735 and ST7789 Library
+
 ### For cloud upload 
 - Adafruit IO account
 - Arduino with Wifi functionality
