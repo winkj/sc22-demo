@@ -7,9 +7,9 @@ This demo application reads out the Sensirion SCD40 and SHT40 sensors, optionall
 ## Prerequisites
 
 ### Base setup
-- Adafruit ESP32-S2 TFT and Adafruit ESP32-S2 QT Py boards
-- SCD40 breakout board
-- SHT40 breakout board
+- [https://www.adafruit.com/product/5300](Adafruit ESP32-S2 TFT) and [https://www.adafruit.com/product/5325](Adafruit ESP32-S2 QT Py) boards
+- [https://www.adafruit.com/product/5187](Adafruit SCD40 breakout board)
+- [https://www.adafruit.com/product/4885](SHT40 breakout board)
 
 ### Arduino IDE libraries
 
@@ -123,6 +123,10 @@ There are a few elements that are specific to the boards linked above:
 1. Use of Neopixel; this can be replaced with the built-in LED on other boards, however you will lose the color coded errors
 2. Wifi Support: make sure your chipset is supported by Adafruit IO's Wifi: https://github.com/adafruit/Adafruit_IO_Arduino/tree/master/src/wifi; alternatively, you will have to reimplement the Wifi setup and IO upload parts
 3. I2C handling: this sample selects `Wire` and `Wire1` respectively, based on the board used; you may have to adjust this based on your specific hardware
+
+### Can I use another Sensor breakout board
+
+Any SHT40/SCD40 breakout board should work, as long as the interface (VCC, I2C) are correct
 
 ## Troubleshooting
 
