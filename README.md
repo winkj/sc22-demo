@@ -111,6 +111,18 @@ Choose whether you want to use the display (1) or not (0)
 ### FONT_SIZE, TITLE_OFFSET, LINE_OFFSET
 These settings are used to influence the display layout.
 
+## FAQ
+
+### Why did you add a separate Humidity / Temperature sensor? Doesn't the SCD40 already have RH and T signals?
+
+The primary reason was to showcase how easy it is to daisy chain different breakout boards together; the secondary reason is that the SHT40 offers a higher accuracy for both humidity and temperature (1.8% vs 6% typical for relative humidity, 0.2 vs 0.8 °C for temperature).
+
+### How can I port this to another Arduino?
+
+There are a few elements that are specific to the boards linked above:
+1. Use of Neopixel; this can be replaced with the built-in LED on other boards, however you will lose the color coded errors
+2. Wifi Support: make sure your chipset is supported by Adafruit IO's Wifi: https://github.com/adafruit/Adafruit_IO_Arduino/tree/master/src/wifi; alternatively, you will have to reimplement the Wifi setup and IO upload parts
+3. I2C handling: this sample selects `Wire` and `Wire1` respectively, based on the board used; you may have to adjust this based on your specific hardware
 
 ## Troubleshooting
 
