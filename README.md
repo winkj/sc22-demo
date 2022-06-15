@@ -7,9 +7,9 @@ This demo application reads out the Sensirion SCD40 and SHT40 sensors, optionall
 ## Prerequisites
 
 ### Base setup
-- [https://www.adafruit.com/product/5300](Adafruit ESP32-S2 TFT) and [https://www.adafruit.com/product/5325](Adafruit ESP32-S2 QT Py) boards
-- [https://www.adafruit.com/product/5187](Adafruit SCD40 breakout board)
-- [https://www.adafruit.com/product/4885](SHT40 breakout board)
+- [Adafruit ESP32-S2 TFT](https://www.adafruit.com/product/5300]) and [Adafruit ESP32-S2 QT Py](https://www.adafruit.com/product/5325) boards
+- [Adafruit SCD40 breakout board](https://www.adafruit.com/product/5187)
+- [SHT40 breakout board](https://www.adafruit.com/product/4885)
 
 ### Arduino IDE libraries
 
