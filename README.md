@@ -13,7 +13,7 @@ This demo application reads out the Sensirion SCD40 and SHT40 sensors, optionall
 
 Example setup with Adafruit ESP32-S2 TFT Feather board:
 
-![Hardware setup](assets/sc22.jpg)
+![Hardware setup](assets/sc22.png)
 
 ### Arduino IDE libraries
 
